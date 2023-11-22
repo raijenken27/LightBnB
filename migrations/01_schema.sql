@@ -69,3 +69,5 @@ UPDATE users SET name = 'Updated Name' WHERE id = 1;
 
 -- Delete a reservation
 DELETE FROM reservations WHERE id = 1;
+
+--
