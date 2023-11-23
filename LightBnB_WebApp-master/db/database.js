@@ -90,3 +90,29 @@ module.exports = {
 
 // the following assumes that you named your connection variable `pool`
 pool.query(`SELECT title FROM properties LIMIT 10;`).then(response => {console.log(response)})
+
+
+const getUserWithEmail = function (email) {
+  return pool
+    .query(`SELECT * FROM users WHERE email = $1;`, [email])
+    .then((result) => result.rows[0] || null)
+    .catch((err) => console.log(err.message));
+};
+
+const getUserWithId = function (id) {
+  return pool
+    .query(`SELECT * FROM users WHERE id = $1;`, [id])
+    .then((result) => result.rows[0] || null)
+    .catch((err) => console.log(err.message));
+};
+
+const addUser = function (user) {
+  const { name, email, password } = user;
+  return pool
+    .query(
+      `INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *;`,
+      [name, email, password]
+    )
+    .then((result) => result.rows[0])
+    .catch((err) => console.log(err.message));
+};
