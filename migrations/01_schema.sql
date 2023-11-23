@@ -48,26 +48,3 @@ CREATE TABLE property_reviews (
   rating SMALLINT NOT NULL DEFAULT 0,
   message TEXT
 );
-
--- Inside 01_schema.sql, after CREATE TABLE users
-INSERT INTO users (name, email, password) VALUES ('John Doe', 'john@example.com', 'password123');
-INSERT INTO users (name, email, password) VALUES ('Jane Smith', 'jane@example.com', 'password456');
-
--- Inside 01_schema.sql, after CREATE TABLE properties
-INSERT INTO properties (owner_id, title, description, thumbnail_photo_url, cover_photo_url, cost_per_night, parking_spaces, number_of_bathrooms, number_of_bedrooms, country, street, city, province, post_code, active)
-VALUES (1, 'Cozy Cabin', 'A peaceful retreat in the mountains.', 'thumbnail1.jpg', 'cover1.jpg', 100, 2, 1, 2, 'Canada', 'Mountain Street', 'Natureville', 'BC', 'V0A 1K0', TRUE);
-
--- Inside 01_schema.sql, after CREATE TABLE reservations
-INSERT INTO reservations (start_date, end_date, property_id, guest_id) VALUES ('2023-01-01', '2023-01-07', 1, 2);
-
--- Inside 01_schema.sql, after CREATE TABLE property_reviews
-INSERT INTO property_reviews (guest_id, property_id, reservation_id, rating, message) VALUES (2, 1, 1, 5, 'Great place to relax!');
-
--- Inside 01_schema.sql, after INSERT statements
--- Update a user's information
-UPDATE users SET name = 'Updated Name' WHERE id = 1;
-
--- Delete a reservation
-DELETE FROM reservations WHERE id = 1;
-
---
