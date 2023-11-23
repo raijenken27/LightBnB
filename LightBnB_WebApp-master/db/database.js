@@ -79,15 +79,6 @@ const addProperty = function (property) {
   return Promise.resolve(property);
 };
 
-module.exports = {
-  getUserWithEmail,
-  getUserWithId,
-  addUser,
-  getAllReservations,
-  getAllProperties,
-  addProperty,
-};
-
 // the following assumes that you named your connection variable `pool`
 pool.query(`SELECT title FROM properties LIMIT 10;`).then(response => {console.log(response)})
 
@@ -115,4 +106,31 @@ const addUser = function (user) {
     )
     .then((result) => result.rows[0])
     .catch((err) => console.log(err.message));
+};
+
+const getAllReservations = function (guest_id, limit = 10) {
+  const queryParams = [guest_id, limit];
+  const queryString = `
+    SELECT reservations.*, properties.*, AVG(property_reviews.rating) AS average_rating
+    FROM reservations
+    JOIN properties ON reservations.property_id = properties.id
+    LEFT JOIN property_reviews ON properties.id = property_reviews.property_id
+    WHERE reservations.guest_id = $1
+      AND end_date < now()::date
+    GROUP BY reservations.id, properties.id
+    ORDER BY start_date
+    LIMIT $2;
+  `;
+  return pool.query(queryString, queryParams)
+    .then(result => result.rows)
+    .catch(err => console.error('Error executing query', err.stack));
+};
+
+module.exports = {
+  getUserWithEmail,
+  getUserWithId,
+  addUser,
+  getAllReservations,
+  getAllProperties,
+  addProperty,
 };
