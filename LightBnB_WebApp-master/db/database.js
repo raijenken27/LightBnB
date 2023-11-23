@@ -87,3 +87,6 @@ module.exports = {
   getAllProperties,
   addProperty,
 };
+
+// the following assumes that you named your connection variable `pool`
+pool.query(`SELECT title FROM properties LIMIT 10;`).then(response => {console.log(response)})
