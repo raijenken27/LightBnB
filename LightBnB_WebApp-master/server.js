@@ -3,7 +3,7 @@ const express = require("express");
 const cookieSession = require("cookie-session");
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3333;
 
 // middleware
 app.use(express.static(path.join(__dirname, "./public")));
